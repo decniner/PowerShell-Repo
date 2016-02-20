@@ -144,7 +144,7 @@ function Call_LazyAdminTool{
 	}
 			
 	$menuHelpAbout_Click={
-    	MsgBox "Contact:  tksatfls@morganstanley.com" "Help"
+    	MsgBox "Contact:  abc@xyz.com"
     }	
     
     $menuFileExit_Click={
@@ -380,7 +380,7 @@ function Call_LazyAdminTool{
 		if ($ComputerName -ne ""){
 			if (Test-Connection $ComputerName -quiet -Count 1){
 				$SBPStatus.Text = "Checking for known add-in issues..."
-				$ODEInstalledCheck = Get-MSRemoteRegistry -computername $ComputerName -path "HKLM\SOFTWARE\Wow6432Node\Morgan Stanley\ODE" | Where {$_.Name -eq "Excel_version"} 
+				$ODEInstalledCheck = Get-MSRemoteRegistry -computername $ComputerName -path "HKLM\SOFTWARE\Wow6432Node\ABC\ODE" | Where {$_.Name -eq "Excel_version"} 
 				if ($ODEInstalledCheck -eq $Null){
 					AppendText $richTextBox Red "-> Excel ODE does not seem to be installed. Please install it via MyApps."
 				}
@@ -401,7 +401,7 @@ function Call_LazyAdminTool{
 						$UserName = $matches.values
 						$User = New-Object System.Security.Principal.NTAccount("$UserName")
 						$SID = $User.Translate([System.Security.Principal.SecurityIdentifier])
-						$xlentAddinLocate = Get-MSRemoteRegistry -computername $ComputerName -path HKEY_USERS\$SID\Software\Microsoft\Office\Excel\AddIns\MorganStanley.DeskApps.XLent.XLentODEPlugin | 
+						$xlentAddinLocate = Get-MSRemoteRegistry -computername $ComputerName -path HKEY_USERS\$SID\Software\Microsoft\Office\Excel\AddIns\denStanley.DeskApps.XLent.XLentODEPlugin | 
 						select Name, Data | 
 						where {$_.name -eq "LoadBehavior"}
 						Start-Sleep -m 1000
@@ -425,11 +425,11 @@ function Call_LazyAdminTool{
 						} 
 						$y = Get-MSRemoteRegistry -computername $ComputerName `
 						-path HKEY_USERS\$SID\Software\Microsoft\Office\Excel\AddIns\ `
-						| Select name | Where {$_.name -eq "zzMorganStanley.Deskapps.ODE.MSODEHost_Excel"}
-						if ($y.Name -eq "zzMorganStanley.Deskapps.ODE.MSODEHost_Excel"){
+						| Select name | Where {$_.name -eq "zzdenStanley.Deskapps.ODE.MSODEHost_Excel"}
+						if ($y.Name -eq "zzdenStanley.Deskapps.ODE.MSODEHost_Excel"){
 							AppendText $richTextBox Red "-> ODE won't load in Excel during start-up","`n","`n",`
 							"Please run the below command via command prompt then restart excel:","`n",`
-							"REG DELETE HKEY_USERS\$SID\Software\Microsoft\Office\Excel\AddIns\zzMorganStanley.Deskapps.ODE.MSODEHost_Excel /f","`n","`n"
+							"REG DELETE HKEY_USERS\$SID\Software\Microsoft\Office\Excel\AddIns\zzdenStanley.Deskapps.ODE.MSODEHost_Excel /f","`n","`n"
 						}
 						$Edis = Get-MSRemoteRegistry -computername $ComputerName -path HKEY_USERS\$SID\Software\Microsoft\Office\14.0\Excel\Resiliency\DisabledItems
 						$Odis = Get-MSRemoteRegistry -computername $ComputerName -path HKEY_USERS\$SID\Software\Microsoft\Office\14.0\Outlook\Resiliency\DisabledItems
@@ -510,7 +510,7 @@ function Call_LazyAdminTool{
 				}
 				$UserName = $matches.values
 				$ConvertToText = $matches | Out-String
-				$C2DSourceDir = "\\$ComputerName\C$\ProgramData\Morgan Stanley\ShimC2DService\"
+				$C2DSourceDir = "\\$ComputerName\C$\ProgramData\den jelmer\ShimC2DService\"
 				$C2DDestDir = New-Item -ItemType directory -Path "\\offidbackup\temp\C2C_logs\$UserName\$ComputerName\" -force
 				$LatestC2DLogs = Get-ChildItem -Path $C2DSourceDir -ErrorAction Stop | where-object {$_.lastwritetime -gt (get-date).addDays(-7)} | Foreach-Object { $_.FullName } 
 				
@@ -813,7 +813,7 @@ function Call_LazyAdminTool{
 	}
 		
 	$SBPContactLink_Click={
-		$Email = "mailto:tksatfls@morganstanley.com"
+		$Email = "mailto:tksatfls@denstanley.com"
 		Start $Email
 	}
 		
@@ -1581,7 +1581,7 @@ function System_Info{
 	$AdUserInfo = Get-ADuser "$RealValue" -Properties *
     $PWExpire = (get-date) - ($AdUserInfo.PasswordLastSet)
     $ExpireDate = 90 - $PWExpire.Days
-    $MyWorkSpace = Get-MSRemoteRegistry -ComputerName $ComputerName -Path "HKEY_LOCAL_MACHINE\SOFTWARE\Morgan Stanley\P8Build\Current" |Select Name, Data |where {$_.Name -like "*Current_Release*"}|select -ExpandProperty data |Out-String
+    $MyWorkSpace = Get-MSRemoteRegistry -ComputerName $ComputerName -Path "HKEY_LOCAL_MACHINE\SOFTWARE\den jelmer\P8Build\Current" |Select Name, Data |where {$_.Name -like "*Current_Release*"}|select -ExpandProperty data |Out-String
 	$MyWorkSpace = $MyWorkSpace.Trim()
 	$AFSVersion = Get-MSRemoteRegistry -computername $ComputerName -path "HKEY_LOCAL_MACHINE\SOFTWARE\OpenAFS\Versions" | where {$_.Name -like "Current"} |select -ExpandProperty Data 
 	$AFSMode = Get-MSRemoteRegistry -computername $ComputerName -path "HKEY_LOCAL_MACHINE\SOFTWARE\OpenAFS\Client" | where {$_.Name -like "Mode"} | select -ExpandProperty Data 
@@ -1653,7 +1653,7 @@ function System_Info2{
 	$Sysuptime = (Get-Date) – [System.Management.ManagementDateTimeconverter]::ToDateTime($LastBootTime) 
 	$AdUserInfo = Get-ADuser "$user" -Properties *
 	
-	$MyWorkSpace = Get-MSRemoteRegistry -ComputerName $ComputerName -Path "HKEY_LOCAL_MACHINE\SOFTWARE\Morgan Stanley\P8Build\Current" |Select Name, Data |where {$_.Name -like "*Current_Release*"}|select -ExpandProperty data |Out-String
+	$MyWorkSpace = Get-MSRemoteRegistry -ComputerName $ComputerName -Path "HKEY_LOCAL_MACHINE\SOFTWARE\den jelmer\P8Build\Current" |Select Name, Data |where {$_.Name -like "*Current_Release*"}|select -ExpandProperty data |Out-String
 	$MyWorkSpace = $MyWorkSpace.Trim()
 	
 	$AFSVersion = Get-MSRemoteRegistry -computername $ComputerName -path "HKEY_LOCAL_MACHINE\SOFTWARE\OpenAFS\Versions" | where {$_.Name -like "Current"} |select -ExpandProperty Data 
