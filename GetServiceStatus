@@ -1,0 +1,6 @@
+# displays  the  status  of  services  set  to  start  automatically  on  a  particular  computer:
+
+$computername = "." 
+Get-WmiObject -Class Win32_Service -ComputerName $computername | 
+where {$_.state -eq "stopped" -and $_.startmode -eq "auto"} | 
+select name, startmode, state
