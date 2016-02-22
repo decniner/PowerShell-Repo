@@ -10,3 +10,20 @@ $computername = "."
 Get-WmiObject -Class Win32_Service -ComputerName $computername | 
 where {$_.state -eq "stopped" -and $_.startmode -eq "auto"} | 
 select name, startmode, state
+
+<#
+
+The  other  utility  cmdlet  we  need  to  consider  is  ForEach-Object.  This  performs  one  or more  commands  contained  in  a  script  block  on  each  object  on  the  pipeline.  For instance,  you  could  modify  the  previous code snippet to this:
+
+#>
+
+$computername = "." 
+Get-WmiObject -Class Win32_Service -ComputerName $computername | 
+where {$_.state -eq "stopped" -and $_.startmode -eq "auto"} | 
+foreach { $_.StartService()} 
+
+<#
+
+The  select  statement  has  been  dropped,  and  once  you’ve  filtered  down  to  the  services  that  you  think  should  be  started  based  on  their  start  mode,  you  can  use  ForEachObject  to  call  the  StartService  method  of  the  service  object.  WMI  will  provide  a return  code  of  0  if  the  action  was  successful.  Any  other  value  means  something  went wrong,  and  you’ll  need  to  investigate.  In  chapter  4  you’ll  see  how  to  test  the  return code in your scripts to detect errors and problems.  We’ve  been  discussing  the  utility  cmdlets  using  their  full  names,  but  in  the  code snippets  the  alias  has  been  used.  Aliases  have  a  place  in  your  PowerShell  usage,  but you need to understand what they are and when you should and shouldn’t use them.
+
+#>
