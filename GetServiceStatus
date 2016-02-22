@@ -1,5 +1,11 @@
 # displays  the  status  of  services  set  to  start  automatically  on  a  particular  computer:
 
+<#
+
+The  first  line  defines  a  variable  to  hold  the  computer  name.  In  this  case  a  period,  ".", signifies  the  local  machine  (localhost  or  $env:COMPUTERNAME  can  also  be  used  to denote  the  local  system).  By  using  the  -ComputerName  parameter,  you  can  connect  to  a specific  computer  rather  than  the  default  local  machine.  A  second  filter  is  added  to  the script  block  to  check  whether  the  startmode  is  set  to  automatic.  If  both  criteria  are  met, the object is displayed.
+
+#>
+
 $computername = "." 
 Get-WmiObject -Class Win32_Service -ComputerName $computername | 
 where {$_.state -eq "stopped" -and $_.startmode -eq "auto"} | 
