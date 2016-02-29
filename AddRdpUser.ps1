@@ -17,7 +17,7 @@ foreach ($line in $csv) {
     
     $ScriptBlockContent = {
         param ($ruser)
-        net localgroup "remote desktop users" /del "$ruser"
+        net localgroup "remote desktop users" /add "$ruser"
     }
     
     Invoke-Command -ComputerName $computer -ScriptBlock $ScriptBlockContent -ArgumentList $user
