@@ -9,10 +9,17 @@ pcname1, user1
 pcname2, user2
 
 #>
+$csv = Import-Csv C:\Temp\list.csv
 
-$csv = Import-Csv c:\list.csv
 foreach ($line in $csv) {
     $computer = $line.computername
     $user = $line.userid
-    icm $computer {net localgroup "remote desktop users" /add using:$user
+    
+    $ScriptBlockContent = {
+        param ($ruser)
+        net localgroup "remote desktop users" /del "$ruser"
+    }
+    
+    Invoke-Command -ComputerName $computer -ScriptBlock $ScriptBlockContent -ArgumentList $user
+        
 }
