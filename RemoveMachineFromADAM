@@ -1,0 +1,70 @@
+#Requires -PSSnapin Quest.ActiveRoles.ADManagement
+ 
+Function Remove-StuckVDIMachineFromAdamDatabase {
+    <#
+    .Synopsis
+    Removes an object from View's ADAM database
+    
+    .Description
+    Finds a computer object in View's ADAM database which represents a machine.
+    Probably one stuck in a Deleting "(Missing)" state. Deletes it (with confirmation)
+ 
+    .Parameter Computer
+    The name of the computer to search for.
+ 
+    .Parameter ConnectionServer
+    The connection server. Is set by default to "yourconnectionserver".
+ 
+    .Example
+    Removes a desktop called "Desktop01"
+    
+    Remove-StuckVDIMachineFromAdamDatabase -Computer "Desktop01"    
+    .Example
+    Removes each of an array of computernames passed as an argument
+    Remove-StuckVDIMachineFromAdamDatabase $arrRogueEntries
+    .Example
+    Uses the pipeline to remove each of an array of stuck machines
+    $arrPipeline | Remove-StuckVDIMachineFromAdamDatabase 
+    
+    .Notes
+    Ben Neise 26/02/2014
+    
+    #>
+    Param (
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            ValueFromPipeline = $true,
+            ValueFromPipelineByPropertyName = $true
+        )]
+        [Array]
+        $Computer,
+ 
+        [Parameter(
+            Mandatory = $false,
+            Position = 1
+        )]
+        [String]
+        $ConnectionServer = "MyConnectionServer"
+    )
+    Begin {
+        Try {
+            Connect-QADService -Service $ConnectionServer -ErrorAction "Stop" | Out-Null
+        }
+        Catch {
+            Write-Error "Can't connect to QADService on $ConnectionServer"
+        }
+        $objAdamDB = Get-QADObject -IncludeAllProperties -SizeLimit 0 -SearchRoot "OU=Servers,DC=vdi,DC=vmware,DC=int"
+    }
+    Process {
+        ForEach ($comp in $Computer){
+            $objAdamDB | Where-Object {$_."pae-DisplayName" -eq $comp} | ForEach-Object {
+                Write-Output ("Found ADAM record: " + $_."pae-DisplayName")
+                $_ | Remove-QADObject
+            }
+        }
+    }
+    End {
+        Disconnect-QADService -Service $ConnectionServer
+    }
+}
