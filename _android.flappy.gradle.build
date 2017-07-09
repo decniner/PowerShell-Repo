@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.flapwing.vallic.hr"
+        minSdkVersion 14
+        targetSdkVersion 25
+        multiDexEnabled true
+
+        ndk {
+            moduleName "player_shared"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+
+        
+    }
+    sourceSets.main {
+        jni.srcDirs = []// <-- disable automatic ndk-build call
+    }
+}
+
+dependencies {
+    compile ('com.google.android.gms:play-services:+'){exclude module: 'support-v4'}
+    compile files('libs/dagger-1.2.2.jar')
+    compile files('libs/javax.inject-1.jar')
+    compile files('libs/nineoldandroids-2.4.0.jar')
+    // compile files('libs/support-v4-19.0.1.jar')
+    compile ('com.android.support:multidex:1.0.1')
+}
