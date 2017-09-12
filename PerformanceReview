@@ -1,0 +1,29 @@
+2017 Performance Review
+
+It was amazing to work together with Denver, who was an excellent Global Desktop Technical Lead. Strong, knowledgeable and responsible leader. Denver assumed a leadership role in Nomura Global Desktop Team, inspiring and motivating his colleagues. Whenever I had a problem, there has never been a time he has left me without a solution. For Denver the job is always the most important thing to do. Very positive attitude towards work. He learns quickly. His hands-on approach to Leadership, programming, mentoring and powerful character won him the respect of the staff.
+
+Please let me take this opportunity to share with you some of Denver's accomplishments this year.
+
+- Successfully lead the Virtual Desktop migration project for approximately 1000 Technology end-users.
+
+- Successfully lead the global software and hardware QA testing, troubleshooting and production deployment of desktop client builds, various in house and third party software tools and business core applications.
+
+- Lead the Global Desktop Points of Contact weekly meetings and conference calls, created the baseline requirements for our new device models for 2017, Operating Systems, User migration tools and monitoring solutions.
+
+Denver has continously aim to reduce time and automate tasks performed by desktop team on a daily basis. He has developed automation tools for thin clients, virtual machines and desktops which saves us hundreds of hours of manual work.
+
+The following are a few examples:
+
+- Batch ActiveView and Global Corporate Directory Query which effectively and efficiently queries user information quickly and easily.  Because of this tool, we were able to automate the creation of our month-end reports and user inventory.
+
+- Thin Client Session Info which identifies the most recent Virtual Desktop host and user login information. This allows us to easily determine which user is using a thin client host. This has also improved our device management capability and hardware inventory. Knowing this information is crucial in providing timely support for our users.
+
+- Disk Write Protection Enabler which allows us to disable or enable disk protection on-demand for all applicable devices on an on-demand basis.
+
+- Desktop Language GUI Changer which allows us to change user interface language based on users preference
+
+- Keyboard Layout Changer which allows us to change the keyboard layout based on user preference
+
+- SID to UserName Converter which converts SID (unique alphanumeric character string which is used to identify an object) into user name. Very helpful when generating reports.
+
+If you have any questions regarding the above feedback, please let me know.
