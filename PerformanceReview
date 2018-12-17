@@ -27,3 +27,27 @@ The following are a few examples:
 - SID to UserName Converter which converts SID (unique alphanumeric character string which is used to identify an object) into user name. Very helpful when generating reports.
 
 If you have any questions regarding the above feedback, please let me know.
+
+
+
+
+ - Procedure for application testing for migration:
+
+1. Ken will share the list of nominated users and make sure they understand that they need to test for the entire team.
+
+2. Migration team to prepare machines and share the list of applications for that team. Once reviewed by nominated user, install the PROD packages. Nominated user will review UAT apps and identify which apps are showstopper.  Migration team to share the list of showstopper UAT apps to Sandeep so he can assign someone to follow up and have it signed off in PROD. Once signed off, migration team will install it to nominated users VDI and have them sign off migration then mirror those apps and install them to the rest of the team members VDI.
+
+Pros:
+We can save time if we mirror all the apps from a nominated user VDI to the rest of the team members.
+
+Cons: 
+Not all team members have the same sets of apps. If we mirror all the apps, we may have to extend the default disk size on VDIs. Unused apps with services or processes that are configured to run automatically during startup may potentially impact VDI performance.
+
+Recommendation:
+Only install apps that are required per user to save disk space and to avoid potential VDI performance impact.  However, this will take time to for migration team to complete since individual users will have to identify thier required apps before migration team can install them.
+
+5. If additional application is required, a SNOW ticket for application installation will be raised by each user individually.
+
+6. For packages that are requested to be installed but are not available for win 10, users will reach out to package owner and have them raise the request to certify it for Win10.
+
+7. Once the package becomes available in PROD, user will raise a ticket for application installation. Migration team to install additional requested packages and close the ticket once completed.
