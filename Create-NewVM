@@ -1,0 +1,15 @@
+$esxName = 'esx'
+$clusterName = 'cluster'
+$dsName = 'ds'
+# $template = Get-Template -Name $templateName
+$ds = Get-Datastore -Name $dsName
+$cluster = Get-Cluster -Name $clusterName
+$esx = Get-VMHost -Name $esxName
+
+#$vm = New-VM -Template $template -Name NewVM -ResourcePool $cluster -Datastore $ds -DiskStorageFormat Thin |
+$vm = New-VM -Name NewVM -ResourcePool $cluster -Datastore $ds -DiskStorageFormat Thin |
+Set-VM -NumCpu 2 -MemoryGB 4 -Confirm:$false
+Get-HardDisk -VM $vm | Set-HardDisk -CapacityGB 100
+
+Start-VM -VM $vm -Confirm:$false
+
