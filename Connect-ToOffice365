@@ -1,0 +1,11 @@
+#Load the office 365 admin cmdlets
+Import-Module msonline
+
+#Get office 365 logon details
+$cred = get-credential
+
+#conmect to office 365 admin service
+Connect-MSOLService -credential $cred
+
+#get all office 365 users
+Get-msoluser -all
