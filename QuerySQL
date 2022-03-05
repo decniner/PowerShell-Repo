@@ -1,0 +1,14 @@
+Install-module sqlserver
+
+#get sql instance from server
+Get-sqlinstance -serverinstance $server -credential $cred
+
+#get sql database from server
+get-sqldatabase -serverinstance $server -credential $cred
+
+# get database tables
+$a = get-sqldatabase -serverinstance $server -database $dbname -credential $cred
+$a.tables
+
+# get top two rows in sql database under table called $tblname
+Read-sqltabledata -serverinstance $server -databasename $dbname -tablename $tblname -schemaname $schname -topN 2 -credential $cred
